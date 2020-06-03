@@ -1,0 +1,51 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+using namespace std;
+
+void writing(char)
+{
+    ofstream File;
+    File.open("Laba.txt");
+    if (File.is_open())
+    {
+        string str;
+        cout << "Введите строку без пробелов" << endl;
+        cin >> str;
+        File << str;
+        File.close();
+    }
+    else cout << "Error";
+}
+void reading(char)
+{
+    ifstream File;
+    File.open("Laba.txt");
+    if (File.is_open())
+    {
+        string str;
+        while (!File.eof())
+        {
+            str = "";
+            getline(File, str);
+            cout << str << endl;
+        }
+        File.close();
+    }
+    else cout << "Error";
+}
+int main()
+{
+    setlocale(LC_ALL, "ru");
+    void (*ARR[2])(char) = { writing,reading };
+    cout << "0.Запись в файл\n";
+    cout << "1.Чтение файла\n";
+    cout << "  Какое действие выбрать?\n ";
+    int n;
+    cin >> n;
+    if (n > 1) cout << "Ошибка";
+    else
+        (*ARR[n])(n);
+    return 0;
+}
