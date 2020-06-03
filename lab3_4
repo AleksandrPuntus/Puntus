@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+using namespace std;
+int main()
+{
+	ifstream File;
+	File.open("Laba.txt");
+	if (File.is_open())
+	{
+	
+		string str;
+		vector<string>V;
+		while (!File.eof())
+		{
+			str = "";
+			getline(File, str);
+			V.push_back(str);
+			//cout << str << endl;
+		}
+		ofstream file;
+		file.open("Laba.txt");
+		if (file.is_open())
+		{
+			file << endl;
+			string s;
+			int length;
+			for (int i = 0; i < V.size(); i++)
+			{
+				s = V[i];
+				length = s.size();
+				if (length <= 50)
+				{
+					if (length % 2 == 0)
+					{
+						int number = (50 - length) / 2;
+						for (int i = 0; i < number; i++)
+							s.insert(s.begin(), ' ');
+						file << s << endl;
+					}
+					else
+					{
+						int number = (50 - length+1) / 2;
+						for (int i = 0; i < number; i++)
+							s.insert(s.begin(), ' ');
+						file << s << endl;
+					}					
+				}
+			}
+		}
+		else cout << "Error";
+	}
+    return 0;
+}
