@@ -1,0 +1,32 @@
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+
+int func(char* str, int count) {
+    if (isdigit(*str)) {
+        count++;
+    }
+    if (*str == '\0') {
+        return count;
+    }
+    func(++str, count);
+}
+int main()
+{
+	setlocale(0, "ru");
+
+    cout << "Количество цифр в строке ";
+    char s1[40] = "1234привет мир";
+    cout << func(s1, 0)<<endl;
+
+    cout << "Количество цифр в строке ";
+    char s2[40] = "Саша 01.05.2002";
+    cout << func(s2, 0)<<endl;
+
+    cout << "Количество цифр в строке ";
+    char s3[40] = "В 16:50 экзамен";
+    cout << func(s3, 0) << endl;
+	
+	return 0;
+}
