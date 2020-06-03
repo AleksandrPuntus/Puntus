@@ -1,0 +1,51 @@
+#include<string>
+#include<fstream>
+#include<Windows.h>
+#include<vector>
+#include<iostream>
+using namespace std;
+int main()
+{
+	setlocale(0, "ru");
+	ifstream File;
+	File.open("Laba.txt");
+	if (File.is_open())
+	{
+		char ch;
+		vector<char> V;
+		cout << "Данные взятые из файла: ";
+		while (File.get(ch))
+			if (ch != ' ')
+				V.push_back(ch);
+		for (int i = 0; i < V.size(); i++)
+			cout << V[i] << " ";
+		cout << endl;
+		int length = V.size();
+		int t, // временная переменная для хранения значения элемента сортируемого массива
+			i; // индекс предыдущего элемента
+		for (int counter = 1; counter < length; counter++)
+		{
+			t = V[counter]; // инициализируем временную переменную текущим значением элемента массива
+			i = counter - 1; // запоминаем индекс предыдущего элемента массива
+			while (i >= 0 && V[i] > t) // пока индекс не равен 0 и предыдущий элемент массива больше текущего
+			{
+				V[i + 1] = V[i]; // перестановка элементов массива
+				V[i] = t;
+				i--;
+			}
+		}
+		cout << "Данные после сортировки: ";
+		for (int i = 0; i < V.size(); i++)
+			cout << V[i] << " ";
+		ofstream file;
+		file.open("Laba.txt", ofstream::app);
+		file << endl;
+		if (file.is_open())
+			for (int i = 0; i < V.size(); i++)
+				file << V[i] << " ";
+		file.close();
+	}
+	else cout << "Error";
+	File.close();
+	return 0;
+}
