@@ -1,0 +1,38 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+using namespace std;
+int main()
+{
+	fstream File;
+	File.open("Laba.txt", fstream::in | fstream::out);
+	if (File.is_open())
+	{
+		string S = "Hello_World";
+		string str;
+		vector<string>V;
+		while (!File.eof())
+		{
+			str = "";
+			getline(File, str);
+			V.push_back(str);
+			//cout << str << endl;
+		}
+		string s;
+		for (int i = 0; i < V.size(); i++)
+		{
+			s = V[i];
+			if (s == "")
+				V[i] = S;
+			cout << V[i] << endl;
+		}
+		ofstream file;
+		file.open("Laba.txt");
+		if (file.is_open())
+			for (int i = 0; i < V.size(); i++)
+				File << V[i] << endl;
+	}
+	else cout << "Error";
+	return 0;
+}
