@@ -1,0 +1,88 @@
+#include<iostream>
+using namespace std;
+
+void Showcopyarr(float* const arr, const int size);
+
+
+void SortIndex(float* arr, int size, int* newarr) 
+{
+    int i, j;
+
+    float* copyarr = new float[size];
+
+    for (i = 0; i < size; i++)
+    {
+        copyarr[i] = arr[i];
+    }
+    
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size - 1; j++) {
+            if (copyarr[j] > copyarr[j + 1]) {
+                float temp = copyarr[j];
+                copyarr[j] = copyarr[j + 1];
+                copyarr[j + 1] = temp;
+            }
+        }
+    }
+
+    for (i = 0; i < size; i++)
+    {
+        for (j = 0; j < size; j++)
+            if (arr[i] == copyarr[j])
+                newarr[i] = (j + 1);
+    }
+    //cout << "Отсортированный\n";
+    //Showcopyarr(copyarr, size);
+  
+    delete[]copyarr;
+}
+float randfrom(float min, float max)
+{
+    float range = (max - min);
+    float div = RAND_MAX / range;
+    return round((min + (rand() / div)) * 10) / 10;
+}
+void Fillcopyarr(float* const arr, const int size)
+{
+    for (int i = 0; i < size; i++) {
+        arr[i] = randfrom(1, 15);
+    }
+}
+void Showcopyarr(float* const arr, const int size)
+{
+    for (int i = 0; i < size; i++)
+        cout << arr[i] << "\t";
+    cout << endl;
+}
+
+int main()
+{
+    for(int n=0;n<3;n++)
+    {
+    setlocale(0, "ru");
+
+    cout << "enter copyarr size ";
+    int size;
+    cin >> size;
+
+    float* arr = new float[size];
+    Fillcopyarr(arr, size);
+
+    cout << "Изначальный массив\n";
+    Showcopyarr(arr, size);
+
+    int* newarr = new int[size];
+
+    SortIndex(arr, size, newarr);
+
+    cout << "Массив индексов" << endl;
+    for (int i = 0; i < size; i++)
+        cout << newarr[i] << "\t";
+    cout << endl << endl;
+
+    delete[] arr;
+    delete[] newarr;
+}
+   
+    return 0;
+}
