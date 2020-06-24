@@ -1,0 +1,587 @@
+#include <Windows.h>
+
+#include <iostream>
+
+#include <stdio.h>
+
+#include<string>
+
+#include<vector>
+
+using namespace std;
+
+struct Railway_station
+
+{
+
+string train_number;
+
+string destination;
+
+string following_days;
+
+string arrival_time;
+
+string parking_time;
+
+int station_num;
+
+};
+
+enum num {
+
+EMPTY = 1,
+
+ALMOST_EMPTY,
+
+HALF,
+
+ALMOST_COMPLETE,
+
+COMPLETE
+
+};
+
+// выведение сведений о данном Вокзале (1)
+
+void output_station(Railway_station station)
+
+{
+
+cout << "Вокзал №" << station.station_num << endl << endl;
+
+cout << "Номер поезда: " << station.train_number << endl;
+
+cout << "Пункт назначения: " << station.destination << endl;
+
+cout << "Дни следования: " << station.following_days << endl;
+
+cout << "Время прибытия: " << station.arrival_time << endl;
+
+cout << "Время стоянки: " << station.parking_time << endl;
+
+cout << endl;
+
+}
+
+int main()
+
+{
+
+setlocale(LC_ALL, "ru");
+
+SetConsoleCP(1251);
+
+SetConsoleOutputCP(1251);
+
+Railway_station* station = new Railway_station[5];
+
+int station_num;
+
+cout << "Duction of the number of stations\n";
+
+int number;
+
+cin >> number;
+
+bool is = false;
+
+switch (number)
+
+{
+
+case EMPTY:
+
+cout << "0%" << endl;
+
+Sleep(1000);
+
+break;
+
+case ALMOST_EMPTY:
+
+cout << "25%" << endl;
+
+Sleep(1000);
+
+break;
+
+case HALF:
+
+cout << "50%" << endl;
+
+Sleep(1000);
+
+break;
+
+case ALMOST_COMPLETE:
+
+cout << "75%" << endl;
+
+Sleep(1000);
+
+break;
+
+case COMPLETE:
+
+cout << "Station is full, goodbye" << endl;
+
+return 0;
+
+break;
+
+}
+
+while (1)
+
+{
+
+system("cls");
+
+// меню
+
+int input_menu;
+
+cout << " 1. Ввод массива вокзалов\n";
+
+cout << " 2. Вывод массива вокзалов\n";
+
+cout << " 3. Сортировка массива вокзалов\n";
+
+cout << " 4. Поиск в массиве вокзалов по заданному параметру\n";
+
+cout << " 5. Изменение заданного вокзала\n";
+
+cout << " 6. Удаление вокзалов из массива\n";
+
+cout << " 7. Выход\n";
+
+cout << "Ввод: "; cin >> input_menu;
+
+system("cls");
+
+if (input_menu == 1)
+
+{
+
+is = true;
+
+cout << "Введите количество вокзалов: ";
+
+cin >> station_num;
+
+station = new Railway_station[station_num];
+
+for (int i = 0; i < station_num; i++)
+
+{
+
+system("cls");
+
+station[i].station_num = i + 1;
+
+cout << "Вокзал №" << station[i].station_num << endl << endl;
+
+cout << "Введите номер поезда: "; cin >> station[i].train_number; cout << endl;
+
+cout << "Введите пункт назначения: "; cin >> station[i].destination; cout << endl;
+
+cout << "Введите дни следования: "; cin >> station[i].following_days; cout << endl;
+
+cout << "Введите время прибытия: "; cin >> station[i].arrival_time; cout << endl;
+
+cout << "Введите время стоянки: ";cin >> station[i].parking_time; cout << endl;
+
+}
+
+}
+
+// если нужно вывести массив структур (2)
+
+else if (input_menu == 2)
+
+{
+
+if (!is) { cout << "Нет вокзалов!"; Sleep(1000); continue; }
+
+for (int i = 0; i < station_num; i++)
+
+{
+
+output_station(station[i]);
+
+}
+
+system("pause");
+
+}
+
+// если нужно сортировать массив структур (3)
+
+else if (input_menu == 3)
+
+{
+
+if (!is || (station_num < 2)) { cout << "Error!"; Sleep(1000); continue; }
+
+// сортировкаа по сортировка по номеру поезда
+
+cout << " Сортировка по номеру поезда \n Ввод: ";
+
+Railway_station station_copy; //копия вокзала
+
+for (int i = 0; i < (station_num - 1); i++)
+
+{
+
+if (station[i].train_number[0] > station[i + 1].train_number[0])
+
+{
+
+station_copy = station[i];
+
+station[i] = station[i + 1];
+
+station[i + 1] = station_copy;
+
+}
+
+else
+
+{
+
+cout << "Error sorting!"; continue;
+
+}
+
+}
+
+system("cls");
+
+cout << "Good!";
+
+Sleep(1000);
+
+}
+
+// если нужно производить поиск в массиве по заданному параметру (4)
+
+else if (input_menu == 4)
+
+{
+
+if (!is) { cout << "Error!"; Sleep(1000); continue; }
+
+int type_search; // параметр поиска
+
+cout << " 1. По номеру поезда\n 2. По пункту назначения\n 3. По дням следования\n 4. По времени прибытия\n 5. По времени стоянки\nВвод: ";
+
+cin >> type_search;
+
+system("cls");
+
+// поиск по номеру поезда
+
+if (type_search == 1)
+
+{
+
+string train_number; cout << "Ввод: "; cin >> train_number;
+
+system("cls");
+
+for (int i = 0; i < station_num; i++)
+
+if (train_number == station[i].train_number)
+
+output_station(station[i]);
+
+system("pause");
+
+}
+
+// поиск по пункту назначения
+
+else if (type_search == 2)
+
+{
+
+string destination; cout << "Ввод: "; cin >> destination;
+
+system("cls");
+
+for (int i = 0; i < station_num; i++)
+
+if (destination==station[i].destination)
+
+output_station(station[i]);
+
+system("pause");
+
+}
+
+// поиск по дням следования
+
+else if (type_search == 3)
+
+{
+
+string following_days; cout << "Ввод: "; cin >> following_days;
+
+system("cls");
+
+for (int i = 0; i < station_num; i++)
+
+if (following_days== station[i].following_days)
+
+output_station(station[i]);
+
+system("pause");
+
+}
+
+// поиск по времени прибытия
+
+else if (type_search == 4)
+
+{
+
+string arrival_time; cout << "Ввод: "; cin >> arrival_time;
+
+system("cls");
+
+for (int i = 0; i < station_num; i++)
+
+if (arrival_time== station[i].arrival_time)
+
+output_station(station[i]);
+
+system("pause");
+
+}
+
+// поиск по времени стоянки
+
+else if (type_search == 5)
+
+{
+
+string parking_time; cout << "Ввод: "; cin >> parking_time;
+
+system("cls");
+
+for (int i = 0; i < station_num; i++)
+
+if (parking_time == station[i].parking_time)
+
+output_station(station[i]);
+
+system("pause");
+
+}
+
+else
+
+{
+
+cout << "Error searching!"; continue;
+
+}
+
+system("cls");
+
+cout << "Goog!";
+
+Sleep(1000);
+
+}
+
+// если нужно изменить заданную структуру (5)
+
+else if (input_menu == 5)
+
+{
+
+if (!is) { cout << "Error!"; Sleep(1000); continue; }
+
+int num;
+
+cout << "Номер вокзала: "; cin >> num;
+
+int i = num - 1;
+
+if (num > station_num || num == 0) { cout << "Error!"; continue; }
+
+system("cls");
+
+cout << "Вокзал №" << station[i].station_num << endl << endl;
+
+cout << "Введите номер поезда: "; cin >> station[i].train_number; cout << endl;
+
+cout << "Введите пункт назначения: "; cin >> station[i].destination; cout << endl;
+
+cout << "Введите дни следования: "; cin >> station[i].following_days; cout << endl;
+
+cout << "Введите время прибытия: "; cin >> station[i].arrival_time; cout << endl;
+
+cout << "Введите время стоянки: "; cin >> station[i].parking_time; cout << endl;
+
+system("cls");
+
+cout << "Goog!";
+
+Sleep(1000);
+
+}
+
+// если нужно удалить структурту из массива (6)
+
+/*else if (input_menu == 6)
+
+{
+
+if (station_num==0) { cout << "Error!"; Sleep(1000); continue; }
+
+int num;
+
+cout << "Номер Вокзала: "; cin >> num;
+
+if (num > station_num || num == 0) { cout << "Error!"; continue; }
+
+if (station_num == 1)
+
+{
+
+delete[] station;
+
+station = new Railway_station[1];
+
+system("cls");
+
+cout << "Goog!";
+
+Sleep(1000);
+
+continue;
+
+}
+
+station_num = station_num - 1;
+
+for (int i = num - 1; i < station_num; i++)
+
+{
+
+int station_i_num = station[i].station_num;
+
+station[i].station_num = station[i + 1].station_num;
+
+station[i + 1].station_num = station_i_num;
+
+station[i] = station[i + 1];
+
+}
+
+// создем копию, в которую размещаем нужный массив
+
+Railway_station* station_copy = new Railway_station[station_num];
+
+for (int i = 0; i < station_num; i++)
+
+{
+
+station_copy[i] = station[i];
+
+}
+
+// изменяем существующий массив окзалов
+
+delete[] station;
+
+station = new Railway_station[station_num];
+
+for (int i = 0; i < station_num; i++)
+
+{
+
+station[i] = station_copy[i];
+
+}
+
+system("cls");
+
+cout << "Goog!";
+
+Sleep(1000);
+
+}*/
+
+else if (input_menu == 6)
+
+{
+
+if (!is) { cout << "Error!"; Sleep(1000); continue; }
+
+int num;
+
+cout << "Номер вокзала: "; cin >> num;
+
+if (num > station_num || num == 0) { cout << "Error!"; continue; }
+
+else
+
+{
+
+num--;
+
+vector<Railway_station>V;
+
+for (int i = 0; i < station_num; i++)
+
+{
+
+V.push_back(station[i]);
+
+}
+
+V.erase(V.begin() + num);
+
+station_num = station_num - 1;
+
+}
+
+system("cls");
+
+cout << "Goog!";
+
+Sleep(1000);
+
+}
+
+// выход (7)
+
+else if (input_menu == 7)
+
+break;
+
+// если не выбран ни один пункт меню
+
+else
+
+{
+
+cout << " Error! ";
+
+Sleep(500);
+
+system("cls");
+
+}
+
+}
+
+system("pause");
+
+return 0;
+
+}
